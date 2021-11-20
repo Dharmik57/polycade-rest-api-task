@@ -1,0 +1,245 @@
+{
+	"info": {
+		"_postman_id": "1e1b4dd7-4890-4aad-b999-6915379030ed",
+		"name": "Polycade-challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/machines/:machine-id/prices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1337/machines/2/prices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"machines",
+						"2",
+						"prices"
+					]
+				},
+				"description": "return the pricing model and price configurations set for a given machine\nif the machine does not have a pricing model configured then the default model from prices.json is returned\nif the machine isn't found by machine-id it responds with not found"
+			},
+			"response": []
+		},
+		{
+			"name": "/machines/:machine-id/prices/:pm-id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1337/machines/1/prices/9d91521d-a2df-4fac-8d21-8271b373ab47",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"machines",
+						"1",
+						"prices",
+						"9d91521d-a2df-4fac-8d21-8271b373ab47"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/machines/:machine-id/prices/:pm-id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1337/machines/1/prices/9d91521d-a2df-4fac-8d21-8271b373ab47",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"machines",
+						"1",
+						"prices",
+						"9d91521d-a2df-4fac-8d21-8271b373ab47"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pricing-models",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1337/pricing-models",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"pricing-models"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pricing-models/:pm-id/prices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1337/pricing-models/9d91521d-a2df-4fac-8d21-8271b373ab47/prices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"pricing-models",
+						"9d91521d-a2df-4fac-8d21-8271b373ab47",
+						"prices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pricing-models/:pm-id/prices",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"price\": 35,\r\n    \"name\": \"120 minute add new\",\r\n    \"value\": 60\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:1337/pricing-models/9d91521d-a2df-4fac-8d21-8271b373ab47/prices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"pricing-models",
+						"9d91521d-a2df-4fac-8d21-8271b373ab47",
+						"prices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pricing-models/:pm-id/prices/:price-id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1337/pricing-models/9d91521d-a2df-4fac-8d21-8271b373ab47/prices/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"pricing-models",
+						"9d91521d-a2df-4fac-8d21-8271b373ab47",
+						"prices",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pricing-models",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"new Pricing Model\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:1337/pricing-models",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"pricing-models"
+					]
+				},
+				"description": "creates a new pricing model in the system\r\nreturns the ID of the new pricing model to the caller\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "/pricing-models/:pm-id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1337/pricing-models/9d91521d-a2df-4fac-8d21-8271b373ab47",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"pricing-models",
+						"9d91521d-a2df-4fac-8d21-8271b373ab47"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pricing-models/:pm-id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Super value updated2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:1337/pricing-models/9d91521d-a2df-4fac-8d21-8271b373ab47",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"pricing-models",
+						"9d91521d-a2df-4fac-8d21-8271b373ab47"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
