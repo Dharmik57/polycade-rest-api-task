@@ -1,14 +1,13 @@
 export default (sequelize, Sequelize) => {
 	const Machine = sequelize.define('machine', {
 		id: {
-			type: Sequelize.INTEGER,
-			primaryKey: true,
-			autoIncrement: true
+			type: Sequelize.STRING, // GUID
+			primaryKey: true
 		},
 		name: {
 			type: Sequelize.STRING
 		},
-		pm_id: {
+		pricing_id: {
 			type: Sequelize.STRING // GUID
 		}
 	}, {

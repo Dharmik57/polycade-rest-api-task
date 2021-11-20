@@ -14,6 +14,6 @@ db.machine = Machine(sequelize, Sequelize);
 
 db.pricingModel.hasMany(db.priceConfiguration, { as: 'pricing', foreignKey: 'pm_id' });
 // db.pricingModel.hasOne(db.machine, { foreignKey: 'pm_id' });
-db.machine.belongsTo(db.pricingModel, { foreignKey: 'pm_id' });
+db.machine.belongsTo(db.pricingModel, { foreignKey: 'pricing_id' });
 
 export default db;

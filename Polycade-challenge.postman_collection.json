@@ -11,7 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:1337/machines/2/prices",
+					"raw": "http://localhost:1337/machines/5632e1ec-46cb-4895-bc8b-a91644568cd5/prices",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -19,7 +19,7 @@
 					"port": "1337",
 					"path": [
 						"machines",
-						"2",
+						"5632e1ec-46cb-4895-bc8b-a91644568cd5",
 						"prices"
 					]
 				},
@@ -33,7 +33,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:1337/machines/1/prices/9d91521d-a2df-4fac-8d21-8271b373ab47",
+					"raw": "http://localhost:1337/machines/4111947a-6c58-4977-90fa-2caaaef88648/prices/9d91521d-a2df-4fac-8d21-8271b373ab47",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -41,7 +41,7 @@
 					"port": "1337",
 					"path": [
 						"machines",
-						"1",
+						"4111947a-6c58-4977-90fa-2caaaef88648",
 						"prices",
 						"9d91521d-a2df-4fac-8d21-8271b373ab47"
 					]
@@ -236,6 +236,53 @@
 					"path": [
 						"pricing-models",
 						"9d91521d-a2df-4fac-8d21-8271b373ab47"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/machines",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:1337/machines",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"machines"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/machines",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"machine2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:1337/machines",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"machines"
 					]
 				}
 			},

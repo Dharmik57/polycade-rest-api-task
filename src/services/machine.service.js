@@ -1,6 +1,59 @@
 import db from '../models';
+import { v4 as uuidv4 } from 'uuid';
 import pricingDefaultData from '../mocks/prices.json';
 const MachineConfigurationData = db.machine;
+
+
+// returns all of the pricing models available for the system also returns the default pricing model in prices.json
+export const findAllMachine = async (ctx) => {
+	try {
+		const machineData = await MachineConfigurationData.findAll();
+
+		var finalMachineData = machineData.reduce(function (map, obj) {
+			map[obj.id] = obj;
+			return map;
+		}, {});
+
+		ctx.status = 200;
+		ctx.body = {
+			status: "success",
+			data: finalMachineData,
+			message: "Machine data is getting successfully",
+		};
+	} catch (err) {
+		console.log(err);
+		ctx.status = 500;
+		ctx.body = {
+			status: 500,
+			message: err.message || "Sorry, an error has occurred.",
+		};
+	}
+};
+
+// creates a new machine in the system
+// returns the ID of the new machine model to the caller
+export const createNewMachine = async (ctx) => {
+	try {
+		// save pricing model to database
+		const request = {
+			name: (ctx.request.body && ctx.request.body.name) || "",
+			id: uuidv4()
+		};
+		const res = await MachineConfigurationData.create(request);
+		ctx.status = 200;
+		ctx.body = {
+			status: "success",
+			data: res,
+			message: "Machine added successfully.",
+		};
+	} catch (error) {
+		ctx.status = 500;
+		ctx.body = {
+			status: 500,
+			message: error.message || "Sorry, an error has occurred.",
+		};
+	}
+};
 
 // return the pricing model and price configurations set for a given machine
 // if the machine does not have a pricing model configured then the default model from prices.json is returned
@@ -68,7 +121,7 @@ export const updateMachineWithPricingModel = async (ctx) => {
 	try {
 		const machineData = await MachineConfigurationData.update(
 			{
-				pm_id: ctx.params.pm_id
+				pricing_id: ctx.params.pm_id
 			},
 			{
 				where: {
@@ -97,12 +150,12 @@ export const updateMachineWithPricingModel = async (ctx) => {
 export const deletePricingModelFromMachine = async (ctx) => {
 	try {
 		const machineData = await MachineConfigurationData.update({
-			pm_id: null
+			pricing_id: null
 		},
 		{
 			where: {
 				id: ctx.params.machine_id,
-				pm_id: ctx.params.pm_id
+				pricing_id: ctx.params.pm_id
 			}
 		});
 
@@ -117,7 +170,6 @@ export const deletePricingModelFromMachine = async (ctx) => {
 			ctx.status = 200;
 			ctx.body = {
 				status: 'Not found',
-				data: machineData,
 				message: 'Not found'
 			};
 		}
