@@ -2,7 +2,7 @@ import db from '../models';
 import { v4 as uuidv4 } from 'uuid';
 import pricingDefaultData from '../mocks/prices.json';
 const MachineConfigurationData = db.machine;
-
+const PricingModel = db.pricingModel;
 
 // returns all of the pricing models available for the system also returns the default pricing model in prices.json
 export const findAllMachine = async (ctx) => {
@@ -16,16 +16,15 @@ export const findAllMachine = async (ctx) => {
 
 		ctx.status = 200;
 		ctx.body = {
-			status: "success",
+			status: 'success',
 			data: finalMachineData,
-			message: "Machine data is getting successfully",
+			message: 'Machine data is getting successfully'
 		};
 	} catch (err) {
-		console.log(err);
 		ctx.status = 500;
 		ctx.body = {
 			status: 500,
-			message: err.message || "Sorry, an error has occurred.",
+			message: err.message || 'Sorry, an error has occurred.'
 		};
 	}
 };
@@ -36,21 +35,21 @@ export const createNewMachine = async (ctx) => {
 	try {
 		// save pricing model to database
 		const request = {
-			name: (ctx.request.body && ctx.request.body.name) || "",
+			name: (ctx.request.body && ctx.request.body.name) || '',
 			id: uuidv4()
 		};
 		const res = await MachineConfigurationData.create(request);
 		ctx.status = 200;
 		ctx.body = {
-			status: "success",
+			status: 'success',
 			data: res,
-			message: "Machine added successfully.",
+			message: 'Machine added successfully.'
 		};
 	} catch (error) {
 		ctx.status = 500;
 		ctx.body = {
 			status: 500,
-			message: error.message || "Sorry, an error has occurred.",
+			message: error.message || 'Sorry, an error has occurred.'
 		};
 	}
 };
@@ -81,20 +80,15 @@ export const findPricingModelConfigurationFromMachine = async (ctx) => {
 		});
 
 		if (machineData) {
-			let newData = machineData;
-			console.log(pricingDefaultData);
-			console.log(newData.pricing_model);
-			if(!newData.pricing_model)
-			{
-				newData.pricing_model = {...pricingDefaultData};
+			const newData = machineData;
+			if (!newData.pricing_model) {
+				newData.dataValues['pricing_model'] = {...pricingDefaultData};
 			}
-
-			console.log(newData);
 			ctx.status = 200;
 			ctx.body = {
 				status: 'success',
 				data: newData,
-				message: 'successfully'
+				message: 'Pricing data is getting successfully'
 			};
 		} else {
 			ctx.status = 200;
@@ -104,7 +98,6 @@ export const findPricingModelConfigurationFromMachine = async (ctx) => {
 			};
 		}
 	} catch (err) {
-		console.log(err);
 		ctx.status = 500;
 		ctx.body = {
 			status: 500,
@@ -119,25 +112,47 @@ export const findPricingModelConfigurationFromMachine = async (ctx) => {
 // if the pricing model isn't found by pm-id it responds with not found
 export const updateMachineWithPricingModel = async (ctx) => {
 	try {
-		const machineData = await MachineConfigurationData.update(
-			{
-				pricing_id: ctx.params.pm_id
-			},
-			{
-				where: {
-					id: ctx.params.machine_id
-				}
+		const pricingData = await PricingModel.findOne({
+			where: {
+				id: ctx.params.pm_id
 			}
-		);
+		});
 
-		ctx.status = 200;
-		ctx.body = {
-			status: 'success',
-			data: machineData,
-			message: 'successfully'
-		};
+		if (pricingData) {
+			const machineData = await MachineConfigurationData.update(
+				{
+					pricing_id: ctx.params.pm_id
+				},
+				{
+					where: {
+						id: ctx.params.machine_id
+					}
+				}
+			);
+
+			if (machineData > 0) {
+				ctx.status = 200;
+				ctx.body = {
+					status: 'success',
+					data: machineData,
+					message: 'Machine data is updated successfully.'
+				};
+			} else {
+				ctx.status = 200;
+				ctx.body = {
+					status: 'Not found',
+					message: 'Not found'
+				};
+			}
+		} else {
+			ctx.status = 200;
+			ctx.body = {
+				status: 'Not found',
+				message: 'Not found'
+			};
+		}
+
 	} catch (err) {
-		console.log(err);
 		ctx.status = 500;
 		ctx.body = {
 			status: 500,
@@ -154,8 +169,8 @@ export const deletePricingModelFromMachine = async (ctx) => {
 		},
 		{
 			where: {
-				id: ctx.params.machine_id,
-				pricing_id: ctx.params.pm_id
+				id: ctx.params.machine_id
+				// pricing_id: ctx.params.pm_id
 			}
 		});
 
@@ -164,7 +179,7 @@ export const deletePricingModelFromMachine = async (ctx) => {
 			ctx.body = {
 				status: 'success',
 				data: machineData,
-				message: 'Deleted successfully'
+				message: 'Pricing model removed successfully'
 			};
 		} else {
 			ctx.status = 200;
@@ -175,7 +190,6 @@ export const deletePricingModelFromMachine = async (ctx) => {
 		}
 
 	} catch (err) {
-		console.log(err);
 		ctx.status = 500;
 		ctx.body = {
 			status: 500,

@@ -19,7 +19,7 @@ export const createPriceForPricingModel = async (ctx) => {
 		ctx.body = {
 			status: 'success',
 			data: res,
-			message: 'successfully added'
+			message: 'Pricing configuration added successfully.'
 		};
 	} catch (error) {
 		ctx.status = 500;
@@ -46,7 +46,7 @@ export const getByPriceConfigFromPMID = async (ctx) => {
 		ctx.body = {
 			status: 'success',
 			data: pricingConfigData,
-			message: 'successfully'
+			message: 'Pricing configuration is getting successfully'
 		};
 	} catch (err) {
 		console.log(err);
@@ -62,7 +62,9 @@ export const getByPriceConfigFromPMID = async (ctx) => {
 export const deletePriceFromPricingModel = async (ctx) => {
 	try {
 		const pricingConfigureData = await PricingConfigurationModel.destroy({
-			where: { id: ctx.params.price_id, pm_id: ctx.params.pm_id }
+			where: { id: ctx.params.price_id,
+				// pm_id: ctx.params.pm_id
+			 }
 		});
 
 		if (pricingConfigureData > 0) {
@@ -70,7 +72,7 @@ export const deletePriceFromPricingModel = async (ctx) => {
 			ctx.body = {
 				status: 'success',
 				data: pricingConfigureData,
-				message: 'Deleted successfully'
+				message: 'Pricing configuration removed successfully'
 			};
 		} else {
 			ctx.status = 200;
